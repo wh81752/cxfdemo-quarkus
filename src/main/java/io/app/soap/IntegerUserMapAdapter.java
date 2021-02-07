@@ -5,7 +5,6 @@ package io.app.soap;
  *
  * <p>What is the point of this class?
  *
- * @author geronimo1
  */
 
 import io.app.domain.User;

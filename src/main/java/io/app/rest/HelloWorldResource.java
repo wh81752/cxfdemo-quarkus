@@ -16,8 +16,6 @@ import java.util.Map;
  * Class Documentation
  *
  * <p>What is the point of this class?
- *
- * @author geronimo1
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

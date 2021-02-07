@@ -9,7 +9,6 @@ import java.util.Map;
 
 /**
  * Implementation of HelloWorld.
- *
  */
 
 @WebService(serviceName = "HelloWorld")

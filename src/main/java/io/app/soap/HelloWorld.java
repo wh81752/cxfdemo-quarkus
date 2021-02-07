@@ -1,12 +1,10 @@
 package io.app.soap;
 
 import io.app.domain.User;
-import org.apache.cxf.annotations.SchemaValidation;
 
 import javax.annotation.security.RolesAllowed;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -16,14 +14,13 @@ import java.util.Map;
  * Simple Hello (Greeter) Webservice.
  *
  * <p>Say hi to well known users.
- *
  */
 
 @SuppressWarnings("unused")
 @WebService
-@RolesAllowed({"APPUSER"})
+@RolesAllowed({ "APPUSER" })
 //@SchemaValidation                // XML issues if @SchemaValidation is enabled. Note: works
-                                   // perfectly in a Quarkus-Undertow-CXF scenario.
+// perfectly in a Quarkus-Undertow-CXF scenario.
 public interface HelloWorld {
 
     /**
@@ -48,7 +45,7 @@ public interface HelloWorld {
 
     @WebMethod()
     @XmlElement(required = true)
-    @RolesAllowed({"APPUSER"})
+    @RolesAllowed({ "APPUSER" })
     String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
     /* Map passing

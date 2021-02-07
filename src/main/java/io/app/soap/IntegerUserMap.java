@@ -13,8 +13,6 @@ import java.util.List;
  * Class Documentation
  *
  * <p>What is the point of this class?
- *
- * @author geronimo1
  */
 @XmlType(name = "IntegerUserMap")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -38,6 +36,7 @@ public class IntegerUserMap {
         public void setId(Integer k) {
             id = k;
         }
+
         public Integer getId() {
             return id;
         }
@@ -45,6 +44,7 @@ public class IntegerUserMap {
         public void setUser(User u) {
             user = u;
         }
+
         public User getUser() {
             return user;
         }

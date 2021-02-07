@@ -4,9 +4,8 @@ package io.app.soap;
  * Class Documentation
  *
  * <p>What is the point of this class?
- *
- * @author geronimo1
  */
+
 import io.app.domain.User;
 import io.app.domain.UserImpl;
 
@@ -16,7 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class UserAdapter extends XmlAdapter<UserImpl, User> {
     public UserImpl marshal(User v) throws Exception {
         if (v instanceof UserImpl) {
-            return (UserImpl)v;
+            return (UserImpl) v;
         }
         return new UserImpl(v.getName());
     }

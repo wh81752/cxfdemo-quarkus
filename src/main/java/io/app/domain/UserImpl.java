@@ -5,7 +5,6 @@ package io.app.domain;
  *
  * <p>What is the point of this class?
  *
- * @author geronimo1
  */
 import org.wildfly.common.annotation.Nullable;
 
