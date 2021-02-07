@@ -1,7 +1,9 @@
 package io.app.soap;
 
 import io.app.domain.User;
+import org.apache.cxf.annotations.SchemaValidation;
 
+import javax.annotation.security.RolesAllowed;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -19,17 +21,21 @@ import java.util.Map;
 
 @SuppressWarnings("unused")
 @WebService
-//@SchemaValidation
+@RolesAllowed({"APPUSER"})
+//@SchemaValidation                // XML issues if @SchemaValidation is enabled. Note: works
+                                   // perfectly in a Quarkus-Undertow-CXF scenario.
 public interface HelloWorld {
 
     /**
      * Most basic service function.
      */
+    @WebMethod()
     String hello();
 
     /**
      * Say hi to someone. Slightly more complex than just hello().
      */
+    @WebMethod()
     String sayHi(String text);
 
     /* Advanced usecase of passing an Interface in.  JAX-WS/JAXB does not
@@ -37,9 +43,13 @@ public interface HelloWorld {
      * be written to handle them
      */
     @WebMethod()
-    @WebResult(name = "result")
     @XmlElement(required = true)
     String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
+
+    @WebMethod()
+    @XmlElement(required = true)
+    @RolesAllowed({"APPUSER"})
+    String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
     /* Map passing
      * JAXB also does not support Maps.  It handles Lists great, but Maps are
