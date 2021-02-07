@@ -14,8 +14,13 @@ $> curl http://localhost:8080/soap/hw?wsdl
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions> .. </wsdl:definitions>
 
 $ ./bin/hello.sh
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns1:helloResponse xmlns:ns1="http://soap.app.io/"><return>Hello World</return></ns1:helloResponse></soap:Body></soap:Envelope>
-
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns1:helloResponse xmlns:ns1="http://soap.app.io/">
+      <return>Hello World</return>
+    </ns1:helloResponse>
+  </soap:Body>
+</soap:Envelope>
 [..]
 ```
 
