@@ -1,6 +1,6 @@
 package io.app.service;
 
-import io.app.soap.User;
+import io.app.domain.User;
 import org.jboss.logging.Logger;
 
 import java.util.Map;

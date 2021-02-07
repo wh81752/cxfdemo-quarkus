@@ -1,4 +1,4 @@
-package io.app.soap;
+package io.app.domain;
 
 /**
  * Class Documentation

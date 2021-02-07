@@ -8,6 +8,8 @@ package io.app.soap;
  * @author geronimo1
  */
 
+import io.app.domain.User;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.LinkedHashMap;
 import java.util.Map;

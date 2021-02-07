@@ -7,6 +7,9 @@ package io.app.soap;
  *
  * @author geronimo1
  */
+import io.app.domain.User;
+import io.app.domain.UserImpl;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 

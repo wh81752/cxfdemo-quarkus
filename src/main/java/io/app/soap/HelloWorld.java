@@ -1,6 +1,6 @@
 package io.app.soap;
 
-import org.apache.cxf.annotations.SchemaValidation;
+import io.app.domain.User;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

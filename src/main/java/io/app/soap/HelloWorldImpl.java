@@ -1,10 +1,10 @@
 package io.app.soap;
 
+import io.app.domain.User;
 import io.app.service.HelloWorldService;
 import org.jboss.logging.Logger;
 
 import javax.jws.WebService;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**

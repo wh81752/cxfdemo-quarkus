@@ -1,11 +1,11 @@
 package io.app.rest;
 
+import io.app.domain.UserImpl;
 import io.app.service.HelloWorldService;
-import io.app.soap.User;
+import io.app.domain.User;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Map;
@@ -20,6 +20,7 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
+@Path("/hw")                        // STRANGE: MUST be present.
 public class HelloWorldResource {
     private static final Logger logger = Logger.getLogger(HelloWorldResource.class);
 
@@ -39,7 +40,7 @@ public class HelloWorldResource {
 
     @POST
     @Path("/hello/{user}")
-    public String sayHiToUser(@PathParam("user") User user) {
+    public String sayHiToUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
         return hwService.sayHiToUser(user);
     }
 
