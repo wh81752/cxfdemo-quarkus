@@ -42,17 +42,33 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- SOAP (CXF) -->
         <dependency>
             <groupId>io.quarkiverse.cxf</groupId>
             <artifactId>quarkus-cxf</artifactId>
             <version>${version.quarkus.cxf}</version>
         </dependency>
 
+        <!-- REST -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
 
+        <!-- Security / RBAC -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt-build</artifactId>
+        </dependency>
+        <!-- enable property based auth (usually for testing only) -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-elytron-security-properties-file</artifactId>
+        </dependency>
         <!-- logging jazz -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

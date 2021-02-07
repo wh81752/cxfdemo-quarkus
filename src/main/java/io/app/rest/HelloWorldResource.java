@@ -1,10 +1,12 @@
 package io.app.rest;
 
+import io.app.domain.User;
 import io.app.domain.UserImpl;
 import io.app.service.HelloWorldService;
-import io.app.domain.User;
 import org.jboss.logging.Logger;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -44,8 +46,16 @@ public class HelloWorldResource {
         return hwService.sayHiToUser(user);
     }
 
+    @POST
+    @Path("/s/hello/{user}")
+    @RolesAllowed({ "APPUSER" })
+    public String sayHiToUserSecured(@PathParam("user") UserImpl user) { // TODO: use interface User instead
+        return String.format("***%s***", hwService.sayHiToUser(user));
+    }
+
     @GET
     @Path("/users")
+    @PermitAll
     public Map<Integer, User> getUsers() {
         return hwService.getUsers();
     }
