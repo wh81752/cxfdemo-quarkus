@@ -1,13 +1,20 @@
-Undertow Examples
+QUARKUS CXF DEMO
 
-These provide some simple examples of how to run an embedded Undertow server.
+Demo example implementing a webservice using CXF and -- for reasons of
+comparing -- the same service as REST resource.
 
-To run the examples simply run
+Compile and run:
+```
+$> mvn clean quarkus:dev
+```
 
-java -jar target/undertow-examples.jar
+Then in another shell tab try:
+```
+$> curl http://localhost:8080/soap/hw?wsdl
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions> .. </wsdl:definitions>
 
-or alternatively:
+$ ./bin/hello.sh
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns1:helloResponse xmlns:ns1="http://soap.app.io/"><return>Hello World</return></ns1:helloResponse></soap:Body></soap:Envelope>
 
-mvn exec:exec
-
-And select the example you wish to run from the menu
+[..]
+```
