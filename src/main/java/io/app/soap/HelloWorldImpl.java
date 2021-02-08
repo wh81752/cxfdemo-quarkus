@@ -2,6 +2,7 @@ package io.app.soap;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.jws.WebService;
 
 import org.jboss.logging.Logger;
@@ -17,7 +18,8 @@ import io.app.service.HelloWorldService;
 public class HelloWorldImpl implements HelloWorld {
     static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
 
-    HelloWorldService hwService = new HelloWorldService();
+    @Inject
+    HelloWorldService hwService;
 
     @Override
     public String hello() {

@@ -3,6 +3,7 @@
 url="http://localhost:8080/soap/hw"
 
 curl -X POST "$url" \
+  -u u:p \
   -H 'Content-Type: text/xml' \
   -d '
   <soapenv:Envelope

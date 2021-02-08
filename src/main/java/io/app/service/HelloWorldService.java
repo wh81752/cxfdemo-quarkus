@@ -7,6 +7,9 @@ import org.jboss.logging.Logger;
 
 import io.app.domain.User;
 
+import javax.annotation.security.RolesAllowed;
+import javax.enterprise.context.Dependent;
+
 /**
  * HelloWorld Service Implementation
  *
@@ -14,6 +17,8 @@ import io.app.domain.User;
  * Provides a (thread safe) hello world service.
  *
  */
+@Dependent
+@RolesAllowed({ "APPUSER" })
 public class HelloWorldService {
     static final Logger logger = Logger.getLogger(HelloWorldService.class);
     static final Map<Integer, User> users = new ConcurrentHashMap<>();
