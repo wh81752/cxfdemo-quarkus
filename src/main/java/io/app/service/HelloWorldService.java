@@ -1,15 +1,17 @@
 package io.app.service;
 
-import io.app.domain.User;
-import org.jboss.logging.Logger;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.jboss.logging.Logger;
+
+import io.app.domain.User;
 
 /**
  * HelloWorld Service Implementation
  *
- * <p>Provides a (thread safe) hello world service.
+ * <p>
+ * Provides a (thread safe) hello world service.
  *
  */
 public class HelloWorldService {
@@ -23,7 +25,7 @@ public class HelloWorldService {
 
     public String sayHi(String text) {
         logger.debug("sayHi called with arg: " + text);
-        return String.format("%s %s","Hello",text);
+        return String.format("%s %s", "Hello", text);
     }
 
     public String sayHiToUser(User user) {
@@ -31,7 +33,7 @@ public class HelloWorldService {
         logger.debug("sayHiToUser called with arg: " + user);
         if (user != null) {
             users.put(users.size() + 1, user);
-            r = "Hello "  + user.getName();
+            r = "Hello " + user.getName();
         }
         return r;
     }

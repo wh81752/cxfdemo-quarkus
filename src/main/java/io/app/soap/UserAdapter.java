@@ -1,16 +1,14 @@
 package io.app.soap;
 
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+
 /**
  * Class Documentation
  *
  * <p>What is the point of this class?
  */
-
 import io.app.domain.User;
 import io.app.domain.UserImpl;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 
 public class UserAdapter extends XmlAdapter<UserImpl, User> {
     public UserImpl marshal(User v) throws Exception {

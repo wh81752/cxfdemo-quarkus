@@ -1,15 +1,13 @@
 package io.app.domain;
 
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Class Documentation
  *
  * <p>What is the point of this class?
- *
  */
 import org.wildfly.common.annotation.Nullable;
-
-import javax.xml.bind.annotation.XmlType;
-
 
 @XmlType(name = "User")
 public class UserImpl implements User {
@@ -17,6 +15,7 @@ public class UserImpl implements User {
 
     public UserImpl() {
     }
+
     public UserImpl(@Nullable String s) {
         setName(s);
     }

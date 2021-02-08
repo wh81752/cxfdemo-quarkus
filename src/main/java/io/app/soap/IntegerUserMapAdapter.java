@@ -1,18 +1,11 @@
 package io.app.soap;
 
-/**
- * Class Documentation
- *
- * <p>What is the point of this class?
- *
- */
-
-import io.app.domain.User;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+
+import io.app.domain.User;
 
 public class IntegerUserMapAdapter extends XmlAdapter<IntegerUserMap, Map<Integer, User>> {
     public IntegerUserMap marshal(Map<Integer, User> v) throws Exception {
@@ -21,8 +14,7 @@ public class IntegerUserMapAdapter extends XmlAdapter<IntegerUserMap, Map<Intege
             IntegerUserMap.IntegerUserEntry iue = new IntegerUserMap.IntegerUserEntry();
             iue.setUser(e.getValue());
             iue.setId(e.getKey());
-            map.getEntries()
-                    .add(iue);
+            map.getEntries().add(iue);
         }
         return map;
     }

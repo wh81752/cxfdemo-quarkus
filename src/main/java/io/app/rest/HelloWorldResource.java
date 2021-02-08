@@ -1,26 +1,29 @@
 package io.app.rest;
 
-import io.app.domain.User;
-import io.app.domain.UserImpl;
-import io.app.service.HelloWorldService;
-import org.jboss.logging.Logger;
+import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.Map;
+
+import org.jboss.logging.Logger;
+
+import io.app.domain.User;
+import io.app.domain.UserImpl;
+import io.app.service.HelloWorldService;
 
 /**
  * Class Documentation
  *
- * <p>What is the point of this class?
+ * <p>
+ * What is the point of this class?
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-@Path("/hw")                        // STRANGE: MUST be present.
+@Path("/hw") // STRANGE: MUST be present.
 public class HelloWorldResource {
     private static final Logger logger = Logger.getLogger(HelloWorldResource.class);
 

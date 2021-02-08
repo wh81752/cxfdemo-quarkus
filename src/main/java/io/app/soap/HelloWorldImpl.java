@@ -1,11 +1,13 @@
 package io.app.soap;
 
-import io.app.domain.User;
-import io.app.service.HelloWorldService;
-import org.jboss.logging.Logger;
+import java.util.Map;
 
 import javax.jws.WebService;
-import java.util.Map;
+
+import org.jboss.logging.Logger;
+
+import io.app.domain.User;
+import io.app.service.HelloWorldService;
 
 /**
  * Implementation of HelloWorld.

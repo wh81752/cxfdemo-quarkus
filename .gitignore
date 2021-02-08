@@ -2,7 +2,7 @@
 target/
 dependency-reduced-pom.xml
 buildNumber.properties
-
+.cache/
 
 ### Java ###
 *.class

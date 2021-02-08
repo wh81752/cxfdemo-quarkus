@@ -1,18 +1,20 @@
 package io.app.soap;
 
-import io.app.domain.User;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import java.util.ArrayList;
-import java.util.List;
+
+import io.app.domain.User;
 
 /**
  * Class Documentation
  *
- * <p>What is the point of this class?
+ * <p>
+ * What is the point of this class?
  */
 @XmlType(name = "IntegerUserMap")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,7 +29,7 @@ public class IntegerUserMap {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "IdentifiedUser")
     static class IntegerUserEntry {
-        //Map keys cannot be null
+        // Map keys cannot be null
         @XmlElement(required = true, nillable = false)
         Integer id;
 

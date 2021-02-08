@@ -1,6 +1,6 @@
 package io.app.soap;
 
-import io.app.domain.User;
+import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 import javax.jws.WebMethod;
@@ -8,18 +8,20 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.util.Map;
+
+import io.app.domain.User;
 
 /**
  * Simple Hello (Greeter) Webservice.
  *
- * <p>Say hi to well known users.
+ * <p>
+ * Say hi to well known users.
  */
 
 @SuppressWarnings("unused")
 @WebService
 @RolesAllowed({ "APPUSER" })
-//@SchemaValidation                // XML issues if @SchemaValidation is enabled. Note: works
+// @SchemaValidation // XML issues if @SchemaValidation is enabled. Note: works
 // perfectly in a Quarkus-Undertow-CXF scenario.
 public interface HelloWorld {
 
@@ -35,9 +37,9 @@ public interface HelloWorld {
     @WebMethod()
     String sayHi(String text);
 
-    /* Advanced usecase of passing an Interface in.  JAX-WS/JAXB does not
-     * support interfaces directly.  Special XmlAdapter classes need to
-     * be written to handle them
+    /*
+     * Advanced usecase of passing an Interface in. JAX-WS/JAXB does not support interfaces directly. Special XmlAdapter
+     * classes need to be written to handle them
      */
     @WebMethod()
     @XmlElement(required = true)
@@ -48,10 +50,9 @@ public interface HelloWorld {
     @RolesAllowed({ "APPUSER" })
     String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
-    /* Map passing
-     * JAXB also does not support Maps.  It handles Lists great, but Maps are
-     * not supported directly.  They also require use of a XmlAdapter to map
-     * the maps into beans that JAXB can use.
+    /*
+     * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported directly. They
+     * also require use of a XmlAdapter to map the maps into beans that JAXB can use.
      */
     @XmlJavaTypeAdapter(IntegerUserMapAdapter.class)
     Map<Integer, User> getUsers();
