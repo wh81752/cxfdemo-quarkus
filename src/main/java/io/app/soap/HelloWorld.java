@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import io.app.domain.User;
+import org.apache.cxf.annotations.SchemaValidation;
 
 /**
  * Simple Hello (Greeter) Webservice.
@@ -18,11 +19,8 @@ import io.app.domain.User;
  * Say hi to well known users.
  */
 
-@SuppressWarnings("unused")
 @WebService
-@RolesAllowed({ "APPUSER" })
-// @SchemaValidation // XML issues if @SchemaValidation is enabled. Note: works
-// perfectly in a Quarkus-Undertow-CXF scenario.
+@SchemaValidation
 public interface HelloWorld {
 
     /**
@@ -35,7 +33,7 @@ public interface HelloWorld {
      * Say hi to someone. Slightly more complex than just hello().
      */
     @WebMethod()
-    String sayHi(String text);
+    String sayHi(@XmlElement(required = true) @WebParam(name = "text") String text);
 
     /*
      * Advanced usecase of passing an Interface in. JAX-WS/JAXB does not support interfaces directly. Special XmlAdapter
@@ -44,11 +42,6 @@ public interface HelloWorld {
     @WebMethod()
     @XmlElement(required = true)
     String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
-
-    @WebMethod()
-    @XmlElement(required = true)
-    @RolesAllowed({ "APPUSER" })
-    String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
     /*
      * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported directly. They

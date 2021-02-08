@@ -35,11 +35,6 @@ public class HelloWorldImpl implements HelloWorld {
     }
 
     @Override
-    public String securedHiToUser(User user) {
-        return hwService.sayHiToUser(user);
-    }
-
-    @Override
     public Map<Integer, User> getUsers() {
         return hwService.getUsers();
     }
