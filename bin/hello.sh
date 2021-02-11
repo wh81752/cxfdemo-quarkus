@@ -7,7 +7,7 @@ curl -X POST "$url" \
   -d '
   <soapenv:Envelope
     xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:blz="http://cxf.app.io/">
+    xmlns:blz="http://soap.app.io/">
     <soapenv:Header/>
     <soapenv:Body>
       <blz:hello />
