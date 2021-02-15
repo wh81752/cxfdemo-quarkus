@@ -9,8 +9,6 @@ import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.cxf.annotations.SchemaValidation;
-
 import io.app.domain.User;
 
 /**

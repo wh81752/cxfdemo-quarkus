@@ -23,7 +23,7 @@ import io.app.service.HelloWorldService;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-@Path("/hw") // STRANGE: MUST be present.
+@Path("/hw")
 public class HelloWorldResource {
     private static final Logger logger = Logger.getLogger(HelloWorldResource.class);
 
@@ -44,7 +44,13 @@ public class HelloWorldResource {
     @POST
     @Path("/hello/{user}")
     public String sayHiToUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
-        return hwService.sayHiToUser(user);
+        try {
+            logger.info("sayHiToUser:" + user);
+            return hwService.sayHiToUser(user);
+        } catch (Throwable e) {
+            logger.info("**** error seen:" + e);
+            throw e;
+        }
     }
 
     @POST

@@ -33,7 +33,13 @@ public class HelloWorldImpl implements HelloWorld {
 
     @Override
     public String sayHiToUser(User user) {
-        return hwService.sayHiToUser(user);
+        try {
+            logger.info("sayHiToUser:" + user);
+            return hwService.sayHiToUser(user);
+        } catch (Throwable e) {
+            logger.info("**** error seen:" + e);
+            throw e;
+        }
     }
 
     @Override
