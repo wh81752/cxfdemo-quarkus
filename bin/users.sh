@@ -7,7 +7,7 @@ curl -X POST "$url" \
   -d '<?xml version="1.0"?>
   <e:Envelope
     xmlns:e="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:cxf="http://cxf.app.io/">
+    xmlns:cxf="http://soap.app.io/">
     <e:Header/>
     <e:Body>
       <cxf:getUsers />

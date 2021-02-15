@@ -2,15 +2,15 @@ package io.app.soap;
 
 import java.util.Map;
 
-import javax.annotation.security.RolesAllowed;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import io.app.domain.User;
 import org.apache.cxf.annotations.SchemaValidation;
+
+import io.app.domain.User;
 
 /**
  * Simple Hello (Greeter) Webservice.
