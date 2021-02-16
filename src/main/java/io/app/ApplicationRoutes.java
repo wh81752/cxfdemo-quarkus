@@ -15,7 +15,7 @@ import io.vertx.ext.web.Router;
  */
 @ApplicationScoped
 public class ApplicationRoutes {
-    public void routes(@Observes Router router) {
-        router.get("/ok").handler(rc -> rc.response().end("OK from Route"));
-    }
+  public void routes(@Observes Router router) {
+    router.get("/ok").handler(rc -> rc.response().end("OK from Route"));
+  }
 }

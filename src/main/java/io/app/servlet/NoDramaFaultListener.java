@@ -13,11 +13,11 @@ import org.jboss.logging.Logger;
  * @author geronimo1
  */
 public class NoDramaFaultListener implements FaultListener {
-    static final Logger logger = Logger.getLogger(NoDramaFaultListener.class);
+  static final Logger logger = Logger.getLogger(NoDramaFaultListener.class);
 
-    @Override
-    public boolean faultOccurred(Exception e, String s, Message message) {
-        logger.info(e.getMessage());
-        return false;
-    }
+  @Override
+  public boolean faultOccurred(Exception e, String s, Message message) {
+    logger.info(e.getMessage());
+    return false;
+  }
 }

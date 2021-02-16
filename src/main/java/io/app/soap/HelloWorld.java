@@ -20,38 +20,38 @@ import io.app.domain.User;
 
 @SuppressWarnings("unused")
 @WebService(serviceName = "HelloWorld")
-@RolesAllowed({ "APPUSER" })
+@RolesAllowed({"APPUSER"})
 public interface HelloWorld {
 
-    /**
-     * Most basic service function.
-     */
-    @WebMethod()
-    String hello();
+  /**
+   * Most basic service function.
+   */
+  @WebMethod()
+  String hello();
 
-    /**
-     * Say hi to someone. Slightly more complex than just hello().
-     */
-    @WebMethod()
-    String sayHi(String text);
+  /**
+   * Say hi to someone. Slightly more complex than just hello().
+   */
+  @WebMethod()
+  String sayHi(String text);
 
-    /*
-     * Advanced usecase of passing an Interface in. JAX-WS/JAXB does not support interfaces directly. Special XmlAdapter
-     * classes need to be written to handle them
-     */
-    @WebMethod()
-    @XmlElement(required = true)
-    String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
+  /*
+   * Advanced usecase of passing an Interface in. JAX-WS/JAXB does not support interfaces directly.
+   * Special XmlAdapter classes need to be written to handle them
+   */
+  @WebMethod()
+  @XmlElement(required = true)
+  String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
-    @WebMethod()
-    @XmlElement(required = true)
-    @RolesAllowed({ "APPUSER" })
-    String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
+  @WebMethod()
+  @XmlElement(required = true)
+  @RolesAllowed({"APPUSER"})
+  String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
-    /*
-     * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported directly. They
-     * also require use of a XmlAdapter to map the maps into beans that JAXB can use.
-     */
-    @XmlJavaTypeAdapter(IntegerUserMapAdapter.class)
-    Map<Integer, User> getUsers();
+  /*
+   * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported
+   * directly. They also require use of a XmlAdapter to map the maps into beans that JAXB can use.
+   */
+  @XmlJavaTypeAdapter(IntegerUserMapAdapter.class)
+  Map<Integer, User> getUsers();
 }

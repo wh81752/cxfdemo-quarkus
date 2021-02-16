@@ -17,38 +17,38 @@ import io.quarkus.test.junit.QuarkusTest;
  */
 @QuarkusTest
 class HelloWorldImplTest {
-    @Test
-    void wsdl() {
-        given().when().get("/soap/hw?wsdl").then().statusCode(200);
-    }
+  @Test
+  void wsdl() {
+    given().when().get("/soap/hw?wsdl").then().statusCode(200);
+  }
 
-    @Test()
-    @Disabled
-    void hello() {
-        given().when().get("/soap/hw/hello").then().statusCode(200);
-    }
+  @Test()
+  @Disabled
+  void hello() {
+    given().when().get("/soap/hw/hello").then().statusCode(200);
+  }
 
-    @Test
-    @Disabled
-    void sayHi() {
-        given().when().get("/soap/hw/sayhi").then().statusCode(200);
-    }
+  @Test
+  @Disabled
+  void sayHi() {
+    given().when().get("/soap/hw/sayhi").then().statusCode(200);
+  }
 
-    @Test
-    @Disabled
-    void sayHiToUser() {
-        given().when().get("/soap/hw/sayHiToUser").then().statusCode(200);
-    }
+  @Test
+  @Disabled
+  void sayHiToUser() {
+    given().when().get("/soap/hw/sayHiToUser").then().statusCode(200);
+  }
 
-    @Test
-    @Disabled
-    void securedHiToUser() {
-        given().when().get("/soap/hw/sayHiToUser").then().statusCode(200);
-    }
+  @Test
+  @Disabled
+  void securedHiToUser() {
+    given().when().get("/soap/hw/sayHiToUser").then().statusCode(200);
+  }
 
-    @Test
-    @Disabled
-    void getUsers() {
-        given().when().get("/soap/hw/users").then().statusCode(200);
-    }
+  @Test
+  @Disabled
+  void getUsers() {
+    given().when().get("/soap/hw/users").then().statusCode(200);
+  }
 }

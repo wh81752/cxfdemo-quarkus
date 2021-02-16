@@ -9,5 +9,5 @@ import io.app.soap.UserAdapter;
 
 @XmlJavaTypeAdapter(UserAdapter.class)
 public interface User {
-    String getName();
+  String getName();
 }

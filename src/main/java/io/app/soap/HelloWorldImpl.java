@@ -16,39 +16,39 @@ import io.app.service.HelloWorldService;
 
 @ApplicationScoped
 public class HelloWorldImpl implements HelloWorld {
-    static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
+  static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
 
-    @Inject
-    HelloWorldService hwService;
+  @Inject
+  HelloWorldService hwService;
 
-    @Override
-    public String hello() {
-        return hwService.hello();
+  @Override
+  public String hello() {
+    return hwService.hello();
+  }
+
+  @Override
+  public String sayHi(String text) {
+    return hwService.sayHi(text);
+  }
+
+  @Override
+  public String sayHiToUser(User user) {
+    try {
+      logger.info("sayHiToUser:" + user);
+      return hwService.sayHiToUser(user);
+    } catch (Throwable e) {
+      logger.info("**** error seen:" + e);
+      throw e;
     }
+  }
 
-    @Override
-    public String sayHi(String text) {
-        return hwService.sayHi(text);
-    }
+  @Override
+  public String securedHiToUser(User user) {
+    return hwService.sayHiToUser(user);
+  }
 
-    @Override
-    public String sayHiToUser(User user) {
-        try {
-            logger.info("sayHiToUser:" + user);
-            return hwService.sayHiToUser(user);
-        } catch (Throwable e) {
-            logger.info("**** error seen:" + e);
-            throw e;
-        }
-    }
-
-    @Override
-    public String securedHiToUser(User user) {
-        return hwService.sayHiToUser(user);
-    }
-
-    @Override
-    public Map<Integer, User> getUsers() {
-        return hwService.getUsers();
-    }
+  @Override
+  public Map<Integer, User> getUsers() {
+    return hwService.getUsers();
+  }
 }
