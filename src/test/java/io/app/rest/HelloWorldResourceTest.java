@@ -35,15 +35,11 @@ class HelloWorldResourceTest {
         .build();
   }
 
-
-
   @Test
   @Order(1)
   public void test_ep_hello() {
     given().when().get("/rest/hw/hello").then().statusCode(200).body(is("Hello World"));
   }
-
-
 
   @Test
   @Order(1)
@@ -51,15 +47,11 @@ class HelloWorldResourceTest {
     given().when().get("/rest/hw/hello/World").then().statusCode(200).body(is("Hello World"));
   }
 
-
-
   @Test
   @Order(1)
   public void test_ep_hello_null() {
     given().when().get("/rest/hw/hello/").then().statusCode(200).body(is("Hello World"));
   }
-
-
 
   @Test
   @Order(5)
@@ -67,8 +59,6 @@ class HelloWorldResourceTest {
     given().when().get("/rest/hw/users").then().statusCode(200)
         .body(is("{\"1\":{\"name\":\"foobar\"}}"));
   }
-
-
 
   @Test
   @Order(1)
