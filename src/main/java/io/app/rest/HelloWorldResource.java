@@ -67,4 +67,14 @@ public class HelloWorldResource {
   public Map<Integer, User> getUsers() {
     return hwService.getUsers();
   }
+
+  @GET
+  @Path("/users")
+  @PermitAll
+  @Produces(MediaType.APPLICATION_XML)
+  @Consumes(MediaType.APPLICATION_XML)
+  public Map<Integer, User> getUsersXML() {
+    logger.debug("getUsersXML called");
+    return hwService.getUsers();
+  }
 }

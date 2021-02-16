@@ -5,16 +5,18 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
+import io.restassured.response.ValidatableResponse;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.hamcrest.CoreMatchers;
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -63,8 +65,8 @@ class HelloWorldResourceTest {
     @Test
     @Order(5)
     public void test_ep_get_users() {
-        given().when().get("/rest/hw/users").then().statusCode(200).body(is("{\"1\":{\"name\":\"foo\"},\"2\":{\"name" +
-                                                                                    "\":\"bar\"}}"));
+        given().when().get("/rest/hw/users").then().statusCode(200).body(
+                is("{\"1\":{\"name\":\"foo\"},\"2\":{\"name" + "\":\"bar\"}}"));
     }
 
     @Test
@@ -97,18 +99,41 @@ class HelloWorldResourceTest {
     @Test
     @Order(0)
     public void test_ep_get_users_empty() {
-
         Map<Integer, User> expected = Collections.emptyMap();
         Map<Integer, User> actual = given().when().get("/rest/hw/users").then().statusCode(200).extract().as(Map.class);
         assertThat(actual, CoreMatchers.is(expected));
     }
 
     @Test
+    @Order(0)
+    public void test_ep_get_usersxml_empty() {
+        Map<Integer, User> expected;
+        Map<Integer, User> actual;
+        ValidatableResponse response;
+
+        expected = Collections.emptyMap();
+        response = given().contentType(ContentType.XML).accept(ContentType.ANY).log().all().when().get("/rest/hw/users")
+                          .then();
+
+        response.statusCode(200);
+        response.contentType(ContentType.XML);
+        // Surprisingly, nothing around like an "empty XML matcher", i.e. something that matches
+        //
+        // <arbitrary-rootname xmlns:whatever .. />
+        //
+        // I.e. an empty xml document regardless of root name and finite number or arbitrary namespaces.
+    }
+
+    @Test
     @Order(1)
     public void test_ep_post_hello_user() {
-        given().when().post("/rest/hw/hello/foo").then().statusCode(200).body(
-                is(String.format("Hello %s", "foo")));
-        given().when().post("/rest/hw/hello/bar").then().statusCode(200).body(
-                is(String.format("Hello %s", "bar")));
+        Arrays.asList("foo","bar").stream().forEach((String item) -> {
+            ValidatableResponse then;
+
+            then = given().when().post("/rest/hw/hello/{name}",item).then();
+            then.statusCode(200);
+            then.contentType(ContentType.JSON);
+            then.body(is(String.format("Hello %s", item)));
+        });
     }
 }
