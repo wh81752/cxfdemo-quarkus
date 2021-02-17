@@ -1,6 +1,5 @@
 package io.app.rest;
 
-import io.app.domain.User;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -160,5 +159,25 @@ class HelloWorldResourceTest {
             then.contentType(ContentType.JSON);
             then.body(is(String.format("Hello %s", item)));
         });
+    }
+
+
+    /**
+     * Test against secured (rolebased) endpoint
+     */
+    @Test
+    @Order(1)
+    public void test_ep_post_rbac_hello_user() {
+        ValidatableResponse then;
+
+        then = given().when().post("/rest/hw/rbac/hello/{name}", "foo").then();
+        then.statusCode(401);
+        // Content-Type is absent on error
+        then.contentType(not(ContentType.JSON));
+        then.contentType(is(""));
+
+        then = given().when().auth().basic("u","p").post("/rest/hw/rbac/hello/{name}", "foo").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
     }
 }
