@@ -10,6 +10,7 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import org.hamcrest.CoreMatchers;
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.*;
+import org.xmlunit.matchers.HasXPathMatcher;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +18,8 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasXPath;
 
 /**
  * Class Documentation
@@ -47,33 +48,53 @@ class HelloWorldResourceTest {
     @Test
     @Order(1)
     public void test_ep_hello() {
-        given().when().get("/rest/hw/hello").then().statusCode(200).body(is("Hello World"));
+        ValidatableResponse then;
+        then = given().when().get("/rest/hw/hello").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
+        then.body(is("Hello World"));
     }
 
     @Test
     @Order(1)
     public void test_ep_hello_world() {
-        given().when().get("/rest/hw/hello/World").then().statusCode(200).body(is("Hello World"));
+        ValidatableResponse then;
+        then = given().when().get("/rest/hw/hello/World").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
+        then.body(is("Hello World"));
     }
 
     @Test
     @Order(1)
     public void test_ep_hello_null() {
-        given().when().get("/rest/hw/hello/").then().statusCode(200).body(is("Hello World"));
+        ValidatableResponse then;
+        then = given().when().get("/rest/hw/hello/").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
+        then.body(is("Hello World"));
     }
 
     @Test
     @Order(5)
     public void test_ep_get_users() {
-        given().when().get("/rest/hw/users").then().statusCode(200).body(
-                is("{\"1\":{\"name\":\"foo\"},\"2\":{\"name" + "\":\"bar\"}}"));
+        ValidatableResponse then = given().when().get("/rest/hw/users").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
+        then.body(is("{\"1\":{\"name\":\"foo\"},\"2\":{\"name" + "\":\"bar\"}}"));
     }
 
     @Test
     @Order(5)
     public void test_ep_get_users_not_empty() {
+        ValidatableResponse then;
         Map refvalue = Collections.emptyMap();
-        Map curvalue = given().when().get("/rest/hw/users").then().statusCode(200).extract().as(Map.class);
+
+        then = given().when().get("/rest/hw/users").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
+
+        Map curvalue = then.extract().as(Map.class);
         assertThat(curvalue, CoreMatchers.not(refvalue));
         assertThat(curvalue.size(), CoreMatchers.is(2));
     }
@@ -81,15 +102,18 @@ class HelloWorldResourceTest {
     @Test
     @Order(5)
     public void test_ep_get_users_not_empty_jsonpath() {
+        ValidatableResponse then;
         // Expected JSON:
         // {
-        //    { 1 , "foo" },
-        //    { 2 , "bar" }
+        // { 1 , "foo" },
+        // { 2 , "bar" }
         // }
-        given().when().get("/rest/hw/users").then().statusCode(200).body("1.name", is("foo"));
-        given().when().get("/rest/hw/users").then().statusCode(200).body("2.name", is("bar"));
-        // CheckItOut -> calculate number of children of root element (!)
-        given().when().get("/rest/hw/users").then().statusCode(200).body("size()", is(2));
+        then = given().when().get("/rest/hw/users").then();
+        then.contentType(ContentType.JSON);
+        then.statusCode(200);
+        then.body("1.name", is("foo"));
+        then.body("2.name", is("bar"));
+        then.body("size()", is(2));
     }
 
     /**
@@ -99,9 +123,16 @@ class HelloWorldResourceTest {
     @Test
     @Order(0)
     public void test_ep_get_users_empty() {
-        Map<Integer, User> expected = Collections.emptyMap();
-        Map<Integer, User> actual = given().when().get("/rest/hw/users").then().statusCode(200).extract().as(Map.class);
-        assertThat(actual, CoreMatchers.is(expected));
+        ValidatableResponse then;
+        Map refvalue = Collections.emptyMap();
+
+        then = given().when().get("/rest/hw/users").then();
+        then.statusCode(200);
+        then.contentType(ContentType.JSON);
+
+        Map curvalue = then.extract().as(Map.class);
+        assertThat(curvalue, CoreMatchers.is(refvalue));
+        assertThat(curvalue.size(), CoreMatchers.is(0));
     }
 
     @Test
@@ -114,12 +145,8 @@ class HelloWorldResourceTest {
 
         response.statusCode(200);
         response.contentType(ContentType.XML);
-        // Surprisingly, nothing around like an "empty XML matcher", i.e. something that matches
-        //
-        // <arbitrary-rootname xmlns:whatever .. />
-        //
-        // I.e. an empty xml document regardless of root name and finite number or arbitrary namespaces.
-        //response.body(hasXPath("node()"));
+        // Test whether XML document is empty.
+        response.body(not(HasXPathMatcher.hasXPath("/*/node()")));
     }
 
     @Test
