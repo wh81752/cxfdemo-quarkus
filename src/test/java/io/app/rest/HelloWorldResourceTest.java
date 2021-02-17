@@ -5,7 +5,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.parsing.Parser;
 import io.restassured.response.ValidatableResponse;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.hamcrest.CoreMatchers;
@@ -19,6 +18,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasXPath;
 
 /**
  * Class Documentation
@@ -107,11 +107,8 @@ class HelloWorldResourceTest {
     @Test
     @Order(0)
     public void test_ep_get_usersxml_empty() {
-        Map<Integer, User> expected;
-        Map<Integer, User> actual;
         ValidatableResponse response;
 
-        expected = Collections.emptyMap();
         response = given().contentType(ContentType.XML).accept(ContentType.ANY).log().all().when().get("/rest/hw/users")
                           .then();
 
@@ -122,15 +119,16 @@ class HelloWorldResourceTest {
         // <arbitrary-rootname xmlns:whatever .. />
         //
         // I.e. an empty xml document regardless of root name and finite number or arbitrary namespaces.
+        //response.body(hasXPath("node()"));
     }
 
     @Test
     @Order(1)
     public void test_ep_post_hello_user() {
-        Arrays.asList("foo","bar").stream().forEach((String item) -> {
+        Arrays.asList("foo", "bar").stream().forEach((String item) -> {
             ValidatableResponse then;
 
-            then = given().when().post("/rest/hw/hello/{name}",item).then();
+            then = given().when().post("/rest/hw/hello/{name}", item).then();
             then.statusCode(200);
             then.contentType(ContentType.JSON);
             then.body(is(String.format("Hello %s", item)));
