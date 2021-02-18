@@ -1,5 +1,6 @@
 package io.app.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
