@@ -2,8 +2,8 @@ package io.app.soap;
 
 import java.util.Map;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.jws.WebService;
 
 import org.jboss.logging.Logger;
 
@@ -14,7 +14,7 @@ import io.app.service.HelloWorldService;
  * Implementation of HelloWorld.
  */
 
-@ApplicationScoped
+@WebService(portName = "Foobar")
 public class HelloWorldImpl implements HelloWorld {
   static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
 
