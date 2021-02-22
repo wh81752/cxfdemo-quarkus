@@ -15,8 +15,8 @@ import io.app.service.HelloWorldService;
  */
 
 @WebService(/* endpointInterface = "io.app.soap.HelloWorld" */)
-public class HelloWorldImpl implements HelloWorld {
-  static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
+public class GreetingImpl implements HelloWorld {
+  static final Logger logger = Logger.getLogger(GreetingImpl.class);
 
   @Inject
   HelloWorldService hwService;
