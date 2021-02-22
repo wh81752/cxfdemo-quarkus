@@ -14,7 +14,6 @@ import java.util.Map;
  */
 
 @WebService(serviceName = "HelloWorld")
-@RolesAllowed({ "APPUSER" })
 public class HelloWorldImpl implements HelloWorld {
     static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
 
@@ -22,7 +21,6 @@ public class HelloWorldImpl implements HelloWorld {
     HelloWorldService hwService;
 
     @Override
-    @RolesAllowed({ "APPUSER" })
     public String hello() {
         return hwService.hello();
     }

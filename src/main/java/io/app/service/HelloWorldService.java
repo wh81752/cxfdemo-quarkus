@@ -18,7 +18,6 @@ import io.app.domain.User;
  *
  */
 @Dependent
-@RolesAllowed({ "APPUSER" })
 public class HelloWorldService {
     static final Logger logger = Logger.getLogger(HelloWorldService.class);
     static final Map<Integer, User> users = new ConcurrentHashMap<>();
@@ -33,6 +32,7 @@ public class HelloWorldService {
         return String.format("%s %s", "Hello", text);
     }
 
+    @RolesAllowed({ "APPUSER" })
     public String sayHiToUser(User user) {
         String r = "";
         logger.debug("sayHiToUser called with arg: " + user);

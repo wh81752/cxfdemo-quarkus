@@ -20,14 +20,12 @@ import io.app.domain.User;
 
 @SuppressWarnings("unused")
 @WebService
-@RolesAllowed({ "APPUSER" })
 public interface HelloWorld {
 
     /**
      * Most basic service function.
      */
     @WebMethod()
-    @RolesAllowed({ "APPUSER" })
     String hello();
 
     /**
