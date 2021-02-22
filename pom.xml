@@ -18,8 +18,8 @@
     </description>
     <properties>
         <!-- version.** -->
-        <version.quarkus-plugin>1.11.1.Final</version.quarkus-plugin>
-        <version.quarkus>1.11.1.Final</version.quarkus>
+        <version.quarkus-plugin>1.12.0.Final</version.quarkus-plugin>
+        <version.quarkus>1.12.0.Final</version.quarkus>
         <version.quarkus.cxf>0.5.0-SNAPSHOT</version.quarkus.cxf>
         <version.cxf>3.4.2</version.cxf>
         <!-- other -->

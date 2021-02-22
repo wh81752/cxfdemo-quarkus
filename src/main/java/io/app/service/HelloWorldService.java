@@ -3,12 +3,12 @@ package io.app.service;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.security.RolesAllowed;
+import javax.enterprise.context.Dependent;
+
 import org.jboss.logging.Logger;
 
 import io.app.domain.User;
-
-import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.Dependent;
 
 /**
  * HelloWorld Service Implementation

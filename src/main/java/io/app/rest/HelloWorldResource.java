@@ -45,15 +45,9 @@ public class HelloWorldResource {
 
     @POST
     @Path("/hello/{user}")
+    @RolesAllowed({ "APPUSER" })
     public String sayHiToUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
         return hwService.sayHiToUser(user);
-    }
-
-    @POST
-    @Path("/sechello/{user}")
-    @RolesAllowed({ "APPUSER" })
-    public String sayHiToUserSecured(@PathParam("user") UserImpl user) { // TODO: use interface User instead
-        return String.format("***%s***", hwService.sayHiToUser(user));
     }
 
     @GET

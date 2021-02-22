@@ -20,14 +20,14 @@ import io.app.domain.User;
 
 @SuppressWarnings("unused")
 @WebService
-// @SchemaValidation // XML issues if @SchemaValidation is enabled. Note: works
-// perfectly in a Quarkus-Undertow-CXF scenario.
+@RolesAllowed({ "APPUSER" })
 public interface HelloWorld {
 
     /**
      * Most basic service function.
      */
     @WebMethod()
+    @RolesAllowed({ "APPUSER" })
     String hello();
 
     /**
@@ -43,10 +43,6 @@ public interface HelloWorld {
     @WebMethod()
     @XmlElement(required = true)
     String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
-
-    @WebMethod()
-    @XmlElement(required = true)
-    String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
     /*
      * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported directly. They
