@@ -70,6 +70,7 @@ public class XmlUnitTests {
     assertThat(xml, hasXPath("/node()"));
     // TODO: wildcard prefixing (according to:
     // https://www.marklogic.com/blog/namespace-wildcards-in-xpath/)
+    // noinspection unchecked
     assertThat(xml, Xml.Matchers.WSDL.matcher);
   }
 }

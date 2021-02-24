@@ -48,6 +48,12 @@
             <artifactId>quarkus-cxf</artifactId>
             <version>${version.quarkus.cxf}</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.cxf</groupId>
+            <artifactId>quarkus-cxf-deployment</artifactId>
+            <version>${version.quarkus.cxf}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- REST -->
         <dependency>

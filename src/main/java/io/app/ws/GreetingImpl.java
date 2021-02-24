@@ -1,0 +1,54 @@
+package io.app.soap;
+
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.jws.WebService;
+
+import org.jboss.logging.Logger;
+
+import io.app.domain.User;
+import io.app.service.HelloWorldService;
+
+/**
+ * Implementation of HelloWorld.
+ */
+
+@WebService(/* endpointInterface = "io.app.soap.HelloWorld" */)
+public class GreetingImpl implements HelloWorld {
+  static final Logger logger = Logger.getLogger(GreetingImpl.class);
+
+  @Inject
+  HelloWorldService hwService;
+
+  @Override
+  public String hello() {
+    return hwService.hello();
+  }
+
+  @Override
+  public String sayHi(String text) {
+    return hwService.sayHi(text);
+  }
+
+  @Override
+  public String sayHiToUser(User user) {
+    try {
+      logger.info("sayHiToUser:" + user);
+      return hwService.sayHiToUser(user);
+    } catch (Throwable e) {
+      logger.info("**** error seen:" + e);
+      throw e;
+    }
+  }
+
+  @Override
+  public String securedHiToUser(User user) {
+    return hwService.sayHiToUser(user);
+  }
+
+  @Override
+  public Map<Integer, User> getUsers() {
+    return hwService.getUsers();
+  }
+}
