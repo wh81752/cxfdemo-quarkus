@@ -21,7 +21,6 @@
         <version.quarkus-plugin>1.12.0.Final</version.quarkus-plugin>
         <version.quarkus>1.12.0.Final</version.quarkus>
         <version.quarkus.cxf>0.5.0-SNAPSHOT</version.quarkus.cxf>
-        <version.cxf>3.4.2</version.cxf>
         <!-- other -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -56,20 +55,6 @@
             <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
 
-        <!-- Security / RBAC -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-jwt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-jwt-build</artifactId>
-        </dependency>
-        <!-- enable property based auth (usually for testing only) -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-elytron-security-properties-file</artifactId>
-        </dependency>
         <!-- logging jazz -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
