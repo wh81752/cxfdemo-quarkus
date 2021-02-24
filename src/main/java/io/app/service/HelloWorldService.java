@@ -3,8 +3,6 @@ package io.app.service;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.enterprise.context.Dependent;
-
 import org.jboss.logging.Logger;
 
 import io.app.domain.User;
@@ -31,6 +29,7 @@ public class HelloWorldService {
         return String.format("%s %s", "Hello", text);
     }
 
+    @RolesAllowed({ "APPUSER" })
     public String sayHiToUser(User user) {
         String r = "";
         logger.debug("sayHiToUser called with arg: " + user);

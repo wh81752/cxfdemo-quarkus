@@ -45,11 +45,6 @@ public interface HelloWorld {
     @XmlElement(required = true)
     String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
-    @WebMethod()
-    @XmlElement(required = true)
-    @RolesAllowed({ "APPUSER" })
-    String securedHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
-
     /*
      * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported directly. They
      * also require use of a XmlAdapter to map the maps into beans that JAXB can use.
