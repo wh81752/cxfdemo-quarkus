@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -27,7 +28,8 @@ import io.app.service.HelloWorldService;
 public class HelloWorldResource {
     private static final Logger logger = Logger.getLogger(HelloWorldResource.class);
 
-    HelloWorldService hwService = new HelloWorldService();
+    @Inject
+    HelloWorldService hwService;
 
     @GET
     @Path("/hello")
@@ -43,15 +45,9 @@ public class HelloWorldResource {
 
     @POST
     @Path("/hello/{user}")
+    @RolesAllowed({ "APPUSER" })
     public String sayHiToUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
         return hwService.sayHiToUser(user);
-    }
-
-    @POST
-    @Path("/sechello/{user}")
-    @RolesAllowed({ "APPUSER" })
-    public String sayHiToUserSecured(@PathParam("user") UserImpl user) { // TODO: use interface User instead
-        return String.format("***%s***", hwService.sayHiToUser(user));
     }
 
     @GET

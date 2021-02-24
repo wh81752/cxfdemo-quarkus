@@ -1,13 +1,13 @@
 package io.app.soap;
 
-import java.util.Map;
-
-import javax.jws.WebService;
-
-import org.jboss.logging.Logger;
-
 import io.app.domain.User;
 import io.app.service.HelloWorldService;
+import org.jboss.logging.Logger;
+
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.jws.WebService;
+import java.util.Map;
 
 /**
  * Implementation of HelloWorld.
@@ -17,7 +17,8 @@ import io.app.service.HelloWorldService;
 public class HelloWorldImpl implements HelloWorld {
     static final Logger logger = Logger.getLogger(HelloWorldImpl.class);
 
-    HelloWorldService hwService = new HelloWorldService();
+    @Inject
+    HelloWorldService hwService;
 
     @Override
     public String hello() {
@@ -31,11 +32,6 @@ public class HelloWorldImpl implements HelloWorld {
 
     @Override
     public String sayHiToUser(User user) {
-        return hwService.sayHiToUser(user);
-    }
-
-    @Override
-    public String securedHiToUser(User user) {
         return hwService.sayHiToUser(user);
     }
 
