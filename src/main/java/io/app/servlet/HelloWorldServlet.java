@@ -21,22 +21,22 @@ import io.app.ws.HelloWorldImpl;
  * @author geronimo1
  */
 public class HelloWorldServlet extends CXFNonSpringServlet {
-    static final Logger logger = Logger.getLogger(HelloWorldServlet.class);
+  static final Logger logger = Logger.getLogger(HelloWorldServlet.class);
 
-    public HelloWorldServlet() {
-        logger.trace("ctor: HelloWorldServlet");
-    }
+  public HelloWorldServlet() {
+    logger.trace("ctor: HelloWorldServlet");
+  }
 
-    @Override
-    public void loadBus(ServletConfig servletConfig) {
-        // create new bus if necessary.
-        this.bus = (this.bus != null) ? this.bus : BusFactory.getDefaultBus(true);
-        // avoid this crazy stacktraces just because a regular fault happend ..
-        // this.bus.setProperty("org.apache.cxf.logging.FaultListener", new NoDramaFaultListener());
-        // publish my webservice
-        HelloWorldImpl hwImpl = CDI.current().select(HelloWorldImpl.class).get();
-        Objects.requireNonNull(hwImpl);
-        Endpoint.publish("/hw", hwImpl);
-    }
+  @Override
+  public void loadBus(ServletConfig servletConfig) {
+    // create new bus if necessary.
+    this.bus = (this.bus != null) ? this.bus : BusFactory.getDefaultBus(true);
+    // avoid this crazy stacktraces just because a regular fault happend ..
+    // this.bus.setProperty("org.apache.cxf.logging.FaultListener", new NoDramaFaultListener());
+    // publish my webservice
+    HelloWorldImpl hwImpl = CDI.current().select(HelloWorldImpl.class).get();
+    Objects.requireNonNull(hwImpl);
+    Endpoint.publish("/hw", hwImpl);
+  }
 
 }

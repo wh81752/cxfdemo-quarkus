@@ -9,5 +9,5 @@ import io.app.ws.UserAdapter;
 
 @XmlJavaTypeAdapter(UserAdapter.class)
 public interface User {
-    String getName();
+  String getName();
 }
