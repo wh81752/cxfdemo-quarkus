@@ -1,4 +1,4 @@
-package io.app.rest;
+package io.app.rs;
 
 import java.util.Map;
 
@@ -11,9 +11,9 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.logging.Logger;
 
+import io.app.backend.HelloWorldBackend;
 import io.app.domain.User;
 import io.app.domain.UserImpl;
-import io.app.service.HelloWorldService;
 
 /**
  * Class Documentation
@@ -29,7 +29,7 @@ public class HelloWorldResource {
     private static final Logger logger = Logger.getLogger(HelloWorldResource.class);
 
     @Inject
-    HelloWorldService hwService;
+    HelloWorldBackend hwService;
 
     @GET
     @Path("/hello")
@@ -44,10 +44,10 @@ public class HelloWorldResource {
     }
 
     @POST
-    @Path("/hello/{user}")
+    @Path("/add/{user}")
     @RolesAllowed({ "APPUSER" })
-    public String sayHiToUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
-        return hwService.sayHiToUser(user);
+    public void addUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
+        hwService.addUser(user);
     }
 
     @GET

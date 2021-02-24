@@ -1,15 +1,11 @@
-package io.app.soap;
+package io.app.ws;
 
 import java.util.Map;
 
-import javax.annotation.security.RolesAllowed;
-import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.cxf.annotations.SchemaValidation;
 
 import io.app.domain.User;
 
@@ -22,28 +18,24 @@ import io.app.domain.User;
 
 @SuppressWarnings("unused")
 @WebService(serviceName = "HelloWorld")
-@RolesAllowed({ "APPUSER" })
 public interface HelloWorld {
 
     /**
      * Most basic service function.
      */
-    @WebMethod()
     String hello();
 
     /**
      * Say hi to someone. Slightly more complex than just hello().
      */
-    @WebMethod()
     String sayHi(String text);
 
     /*
      * Advanced usecase of passing an Interface in. JAX-WS/JAXB does not support interfaces directly. Special XmlAdapter
      * classes need to be written to handle them
      */
-    @WebMethod()
     @XmlElement(required = true)
-    String sayHiToUser(@XmlElement(required = true) @WebParam(name = "user") User user);
+    void addUser(@XmlElement(required = true) @WebParam(name = "user") User user);
 
     /*
      * Map passing JAXB also does not support Maps. It handles Lists great, but Maps are not supported directly. They

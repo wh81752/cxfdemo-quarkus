@@ -10,7 +10,7 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 import org.jboss.logging.Logger;
 
-import io.app.soap.HelloWorldImpl;
+import io.app.ws.HelloWorldImpl;
 
 /**
  * HelloWorldServlet

@@ -1,4 +1,4 @@
-package io.app.soap;
+package io.app.ws;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

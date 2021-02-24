@@ -1,4 +1,4 @@
-package io.app.soap;
+package io.app.ws;
 
 import java.util.ArrayList;
 import java.util.List;
