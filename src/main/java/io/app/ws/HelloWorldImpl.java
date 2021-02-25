@@ -19,7 +19,7 @@ import io.app.domain.User;
  * Implementation of HelloWorld.
  */
 
-@WebService(serviceName = "HelloWorld")
+@WebService(serviceName = "HelloWorld",endpointInterface="io.app.ws.HelloWorld")
 @RequestScoped
 @SchemaValidation
 @SOAPBinding(style = SOAPBinding.Style.RPC)
@@ -39,25 +39,25 @@ public class HelloWorldImpl implements HelloWorld {
     HelloWorldBackend hwService;
 
     @Override
-    @WebMethod
     public String hello() {
+        return hwService.hello();
+    }
+    @Override
+    public String greet() {
         return hwService.hello();
     }
 
     @Override
-    @WebMethod
     public String sayHi(String text) {
         return hwService.sayHi(text);
     }
 
     @Override
-    @WebMethod
     public void addUser(User user) {
         hwService.addUser(user);
     }
 
     @Override
-    @WebMethod
     public Map<Integer, User> getUsers() {
         return hwService.getUsers();
     }

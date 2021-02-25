@@ -20,7 +20,8 @@
         <!-- version.** -->
         <version.quarkus-plugin>1.12.0.Final</version.quarkus-plugin>
         <version.quarkus>1.12.0.Final</version.quarkus>
-        <version.quarkus.cxf>0.5.0-SNAPSHOT</version.quarkus.cxf>
+        <version.quarkus.cxf>0.6.0-SNAPSHOT</version.quarkus.cxf>
+        <version.xmlunit>2.8.2</version.xmlunit>
         <!-- other -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -48,12 +49,6 @@
             <artifactId>quarkus-cxf</artifactId>
             <version>${version.quarkus.cxf}</version>
         </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.cxf</groupId>
-            <artifactId>quarkus-cxf-deployment</artifactId>
-            <version>${version.quarkus.cxf}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- REST -->
         <dependency>
@@ -61,30 +56,44 @@
             <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
 
-        <!-- logging jazz -->
+        <!-- Security / RBAC -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.0</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>2.14.0</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt-build</artifactId>
         </dependency>
+        <!-- enable property based auth (usually for testing only) -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.14.0</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-elytron-security-properties-file</artifactId>
         </dependency>
         <!-- testing -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+            <version>${version.xmlunit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-matchers</artifactId>
+            <version>${version.xmlunit}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
@@ -95,7 +104,48 @@
                 <plugin>
                     <groupId>net.revelc.code.formatter</groupId>
                     <artifactId>formatter-maven-plugin</artifactId>
-                    <version>2.12.1</version>
+                    <version>2.13.0</version>
+                    <configuration>
+                        <configFile>${project.basedir}/eclipse-java-google-style.xml</configFile>
+                        <encoding>UTF-8</encoding>
+                        <lineEnding>LF</lineEnding>
+                        <skip>${format.skip}</skip>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>format</id>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                        </execution>
+                        <execution>
+                            <id>validate</id>
+                            <goals>
+                                <goal>validate</goal>
+                            </goals>
+                            <phase>compile</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>1.5.0</version>
+                    <configuration>
+                        <groups>java.,javax.,org.,com.</groups>
+                        <staticGroups>*</staticGroups>
+                        <skip>${format.skip}</skip>
+                        <removeUnused>true</removeUnused>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>sort-imports</id>
+                            <goals>
+                                <goal>sort</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -136,47 +186,22 @@
                 <version>${version.quarkus-plugin}</version>
             </plugin>
             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>io.quarkus</groupId>
-                        <artifactId>quarkus-ide-config</artifactId>
-                        <version>1.8.1.Final</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <lineEnding>LF</lineEnding>
-                    <skip>${format.skip}</skip>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code</groupId>
                 <artifactId>impsort-maven-plugin</artifactId>
-                <version>1.5.0</version>
-                <configuration>
-                    <groups>java.,javax.,org.,com.</groups>
-                    <staticGroups>*</staticGroups>
-                    <skip>${format.skip}</skip>
-                    <removeUnused>true</removeUnused>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>sort-imports</id>
-                        <goals>
-                            <goal>sort</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

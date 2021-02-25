@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.app.soap.Xml.NsXPath;
@@ -34,6 +35,7 @@ class RestAssuredHelloWorldTest {
 
   @BeforeAll
   static void setup() {
+    EncoderConfig enc;
     // Config demo:
     // Use "Content-Type: application/xml" as default for all HTTP requests.
     // Problem: overriding RestAssured.requestSpecification destroys the original setup magically
@@ -42,16 +44,19 @@ class RestAssuredHelloWorldTest {
     RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.XML)
         .setPort(ConfigProvider.getConfig().getValue("quarkus.http.test-port", Integer.class))
         .build();
+    //
     // UTF-8, UTF-8 and UTF-8 again. Is there any reason not to use UTF-8 nowadays?
-    EncoderConfig encoderConfig = encoderConfig().defaultContentCharset(StandardCharsets.UTF_8);
-    RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
+    //
+    enc = encoderConfig().defaultContentCharset(StandardCharsets.UTF_8);
 
+
+    RestAssured.config = RestAssured.config().encoderConfig(enc);
   }
 
   @Test
   void wsdl() {
     ValidatableResponse then;
-    then = given().log().all(true).when().get("/soap/hw?wsdl").then();
+    then = given().log().all(true).when().get("/ws/hw?wsdl").then();
     then.statusCode(200);
     then.contentType(ContentType.XML);
     // TODO: check against namespaced root element
@@ -81,6 +86,7 @@ class RestAssuredHelloWorldTest {
   }
 
   @Test
+  @Disabled
   void hello_post_soap() {
     // <soap:Envelope
     // xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns1:helloResponse
@@ -96,6 +102,7 @@ class RestAssuredHelloWorldTest {
   }
 
   @Test
+  @Disabled
   void hello_post_soap_variant_A() {
     ValidatableResponse then;
     then =
@@ -108,9 +115,10 @@ class RestAssuredHelloWorldTest {
   }
 
   @Test
+  @Disabled
   void sayHi() {
     ValidatableResponse then;
-    then = given().log().all(true).body(Xml.SOAPREQUESTS.sayHi("foo")).when().post("/soap/hw/sayHi")
+    then = given().log().all(true).body(Xml.SOAPREQUESTS.sayHi("foo")).when().post("/soap/hw/user")
         .then();
     then.statusCode(200);
     then.contentType(ContentType.XML);
@@ -119,12 +127,4 @@ class RestAssuredHelloWorldTest {
         .withNamespaceContext(NsXPath.ns()));
   }
 
-  @Test
-  void sayHiToUser() {}
-
-  @Test
-  void securedHiToUser() {}
-
-  @Test
-  void getUsers() {}
 }

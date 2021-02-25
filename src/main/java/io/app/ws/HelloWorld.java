@@ -2,6 +2,7 @@ package io.app.ws;
 
 import java.util.Map;
 
+import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
@@ -23,7 +24,10 @@ public interface HelloWorld {
     /**
      * Most basic service function.
      */
+    @WebMethod
     String hello();
+
+    String greet();
 
     /**
      * Say hi to someone. Slightly more complex than just hello().

@@ -5,24 +5,29 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.jws.WebService;
 
+import io.app.backend.HelloWorldBackend;
+import io.app.ws.HelloWorld;
 import org.jboss.logging.Logger;
 
 import io.app.domain.User;
-import io.app.service.HelloWorldService;
 
 /**
  * Implementation of HelloWorld.
  */
 
-@WebService(/* endpointInterface = "io.app.soap.HelloWorld" */)
+//@WebService(/* endpointInterface = "io.app.soap.HelloWorld" */)
 public class GreetingImpl implements HelloWorld {
   static final Logger logger = Logger.getLogger(GreetingImpl.class);
 
   @Inject
-  HelloWorldService hwService;
+  HelloWorldBackend hwService;
 
   @Override
   public String hello() {
+    return hwService.hello();
+  }
+  @Override
+  public String greet() {
     return hwService.hello();
   }
 
@@ -32,19 +37,14 @@ public class GreetingImpl implements HelloWorld {
   }
 
   @Override
-  public String sayHiToUser(User user) {
+  public void addUser(User user) {
     try {
       logger.info("sayHiToUser:" + user);
-      return hwService.sayHiToUser(user);
+      hwService.addUser(user);
     } catch (Throwable e) {
       logger.info("**** error seen:" + e);
       throw e;
     }
-  }
-
-  @Override
-  public String securedHiToUser(User user) {
-    return hwService.sayHiToUser(user);
   }
 
   @Override
