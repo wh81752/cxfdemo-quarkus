@@ -10,7 +10,6 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.xml.namespace.QName;
@@ -34,89 +33,86 @@ import static org.xmlunit.matchers.HasXPathMatcher.hasXPath;
 
 @QuarkusTest
 class CXFHelloWorldTest {
-  private static final Logger logger = Logger.getLogger(CXFHelloWorldTest.class);
+    private static final Logger logger = Logger.getLogger(CXFHelloWorldTest.class);
 
-  @BeforeAll
-  static void setup() {}
+    @BeforeAll
+    static void setup() {}
 
-  /**
-   * @return port number of quarkus instance initiated by @QuarkusTest
-   */
-  static private Integer quarkusport() {
-    return ConfigProvider.getConfig().getValue("quarkus.http.test-port", Integer.class);
-  }
-
-  static private URL urlBuilder(String fmt, Object... args) {
-    try {
-      return new URL(String.format(fmt, args));
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
+    /**
+     * @return port number of quarkus instance initiated by @QuarkusTest
+     */
+    static private Integer quarkusport() {
+        return ConfigProvider.getConfig().getValue("quarkus.http.test-port", Integer.class);
     }
-  }
 
-  static private URL wsURL() {
-    return urlBuilder("http://localhost:%s/ws/hw", quarkusport());
-  }
+    static private URL urlBuilder(
+            String fmt,
+            Object... args
+    ) {
+        try {
+            return new URL(String.format(fmt, args));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-  static private URL wsdlURL() {
-    return urlBuilder("http://localhost:%s/ws/hw?wsdl", quarkusport());
-  }
+    static private URL wsURL() {
+        return urlBuilder("http://localhost:%s/ws/hw", quarkusport());
+    }
 
-  static private QName serviceName() {
-    return new QName("http://soap.app.io/", "HelloWorld");
-  }
+    static private URL wsdlURL() {
+        return urlBuilder("http://localhost:%s/ws/hw?wsdl", quarkusport());
+    }
 
-  static private QName portName() {
-    return new QName("http://soap.app.io/", "HelloWorldImplPort");
-  }
+    static private QName serviceName() {
+        return new QName("http://ws.app.io/", "HelloWorld");
+    }
 
-  static private HelloWorld client() {
-    Service service = Service.create(serviceName());
-    service.addPort(portName(), "http://schemas.xmlsoap.org/soap/", wsURL().toString());
-    return service.getPort(portName(), HelloWorld.class);
-  }
+    static private QName portName() {
+        return new QName("http://ws.app.io/", "HelloWorldImplPort");
+    }
 
-  @Test
-  @Disabled
-  void wsdl() {
-    ValidatableResponse then;
-    then = given().log().all(true).when().get("/ws/hw?wsdl").then();
-    then.statusCode(200);
-    then.contentType(ContentType.XML);
-    then.body(hasXPath("/wsdl:definitions").withNamespaceContext(Xml.soapNamespaceContext()));
-    then.body(Xml.matcherWsdl());
-  }
+    static private HelloWorld client() {
+        Service service = Service.create(serviceName());
+        service.addPort(portName(), "http://schemas.xmlsoap.org/soap/", wsURL().toString());
+        return service.getPort(portName(), HelloWorld.class);
+    }
 
-  @Test
-  @Disabled
-  void hello_with_wsdl() {
-    Service service = Service.create(wsdlURL(), serviceName());
-    HelloWorld client = service.getPort(HelloWorld.class);
-    MatcherAssert.assertThat(client.hello(), CoreMatchers.is("Hello World"));
-  }
+    @Test
+    void wsdl() {
+        ValidatableResponse then;
+        then = given().log().all(true).when().get("/ws/hw?wsdl").then();
+        then.statusCode(200);
+        then.contentType(ContentType.XML);
+        then.body(hasXPath("/wsdl:definitions").withNamespaceContext(Xml.soapNamespaceContext()));
+        then.body(Xml.matcherWsdl());
+    }
 
-  @Test
-  @Disabled
-  void hello_no_wsdl() {
-    MatcherAssert.assertThat(client().hello(), CoreMatchers.is("Hello World"));
-  }
+    @Test
+    void hello_with_wsdl() {
+        Service service = Service.create(wsdlURL(), serviceName());
+        HelloWorld client = service.getPort(HelloWorld.class);
+        MatcherAssert.assertThat(client.hello(), CoreMatchers.is("Hello World"));
+    }
 
-  @Test
-  @Disabled
-  void sayHi_no_wsdl() {
-    MatcherAssert.assertThat(client().sayHi("foo"), CoreMatchers.is("Hello foo"));
-  }
+    @Test
+    void hello_no_wsdl() {
+        MatcherAssert.assertThat(client().hello(), CoreMatchers.is("Hello World"));
+    }
 
-  @Test
-  @Disabled
-  void sayHiToUser() {
-    client().addUser(new UserImpl("bar"));
-  }
+    @Test
+    void sayHi_no_wsdl() {
+        MatcherAssert.assertThat(client().sayHi("foo"), CoreMatchers.is("Hello foo"));
+    }
 
-  @Test
-  @Disabled
-  void getUsers() {
-    assertNotNull(client().getUsers());
-    assertTrue(client().getUsers().size() > 0);
-  }
+    @Test
+    void sayHiToUser() {
+        client().addUser(new UserImpl("bar"));
+    }
+
+    @Test
+    void getUsers() {
+        assertNotNull(client().getUsers());
+        assertTrue(client().getUsers().size() > 0);
+    }
 }

@@ -32,8 +32,14 @@ public class HelloWorldBackend {
         return String.format("%s %s", "Hello", text);
     }
 
-    @RolesAllowed({ "APPUSER" })
     public void addUser(User user) {
+        logger.debug("addUser called with arg: " + user);
+        if (user != null) {
+            users.put(users.size() + 1, user);
+        }
+    }
+    @RolesAllowed({ "APPUSER" })
+    public void addUserSec(User user) {
         logger.debug("addUser called with arg: " + user);
         if (user != null) {
             users.put(users.size() + 1, user);

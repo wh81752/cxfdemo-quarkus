@@ -30,7 +30,6 @@ import io.restassured.response.ValidatableResponse;
  */
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-
 class HelloWorldResourceTest {
   private static final Logger logger = Logger.getLogger(HelloWorldResourceTest.class);
 
@@ -87,7 +86,6 @@ class HelloWorldResourceTest {
 
   @Test
   @Order(5)
-  @Disabled
   public void test_ep_get_users_not_empty() {
     ValidatableResponse then;
     Map refvalue = Collections.emptyMap();
@@ -103,7 +101,6 @@ class HelloWorldResourceTest {
 
   @Test
   @Order(5)
-  @Disabled
   public void test_ep_get_users_not_empty_jsonpath() {
     ValidatableResponse then;
     // Expected JSON:
@@ -138,7 +135,6 @@ class HelloWorldResourceTest {
 
   @Test
   @Order(0)
-  @Disabled
   public void test_ep_get_usersxml_empty() {
     ValidatableResponse response;
 
@@ -153,15 +149,15 @@ class HelloWorldResourceTest {
 
   @Test
   @Order(1)
-  @Disabled
-  public void test_ep_post_hello_user() {
+  public void test_add_user() {
     Arrays.asList("foo", "bar").stream().forEach((String item) -> {
       ValidatableResponse then;
 
-      then = given().auth().basic("u", "p").when().post("/rs/hw/hello/{name}", item).then();
-      then.statusCode(200);
-      then.contentType(ContentType.JSON);
-      then.body(is(String.format("Hello %s", item)));
+      then = given().when().post("/rs/hw/add/{name}", item).then();
+      then.statusCode(204);
+      // TODO: why no content type just because empty? Cause "" is not valid JSON?
+      then.contentType(not(ContentType.JSON));
+      then.body(is(""));
     });
   }
 
@@ -171,18 +167,17 @@ class HelloWorldResourceTest {
    */
   @Test
   @Order(6)
-  @Disabled
   public void test_ep_post_rbac_hello_user() {
     ValidatableResponse then;
 
-    then = given().when().post("/rs/hw/rbac/hello/{name}", "foo").then();
+    then = given().when().post("/rs/hw/s/add/{name}", "foo").then();
     then.statusCode(401);
     // Content-Type is absent on error
     then.contentType(not(ContentType.JSON));
     then.contentType(is(""));
 
-    then = given().when().auth().basic("u", "p").post("/rs/hw/rbac/hello/{name}", "foo").then();
-    then.statusCode(200);
-    then.contentType(ContentType.JSON);
+    then = given().when().auth().basic("u", "p").post("/rs/hw/s/add/{name}", "foo").then();
+    then.statusCode(204);
+    then.contentType(not(ContentType.JSON));
   }
 }

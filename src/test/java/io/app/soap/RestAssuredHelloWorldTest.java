@@ -67,7 +67,7 @@ class RestAssuredHelloWorldTest {
   @Test
   void hello_get() {
     ValidatableResponse then;
-    then = given().log().all(true).when().get("/soap/hw/hello").then();
+    then = given().log().all(true).when().get("/ws/hw/hello").then();
     then.statusCode(500);
     then.contentType(ContentType.XML);
   }
@@ -75,7 +75,7 @@ class RestAssuredHelloWorldTest {
   @Test
   void hello_post_empty() {
     ValidatableResponse then;
-    then = given().log().all(true).when().post("/soap/hw/hello").then();
+    then = given().log().all(true).when().post("/ws/hw/hello").then();
     then.statusCode(500);
     then.contentType(ContentType.XML);
   }
@@ -86,14 +86,13 @@ class RestAssuredHelloWorldTest {
   }
 
   @Test
-  @Disabled
   void hello_post_soap() {
     // <soap:Envelope
-    // xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns1:helloResponse
-    // xmlns:ns1="http://soap.app.io/"><return>Hello
+    // xmlns:soap="http://schemas.xmlsoap.org/ws/envelope/"><soap:Body><ns1:helloResponse
+    // xmlns:ns1="http://ws.app.io/"><return>Hello
     // World</return></ns1:helloResponse></soap:Body></soap:Envelope>
     ValidatableResponse then;
-    then = given().log().all(true).body(helloSoapRequest()).when().post("/soap/hw/hello").then();
+    then = given().log().all(true).body(helloSoapRequest()).when().post("/ws/hw/hello").then();
     then.statusCode(200);
     then.contentType(ContentType.XML);
     // Hint: use exactly those prefixes as provided with function withNamespaceContext()
@@ -102,11 +101,10 @@ class RestAssuredHelloWorldTest {
   }
 
   @Test
-  @Disabled
   void hello_post_soap_variant_A() {
     ValidatableResponse then;
     then =
-        given().log().all(true).body(Xml.SOAPREQUESTS.hello()).when().post("/soap/hw/hello").then();
+        given().log().all(true).body(Xml.SOAPREQUESTS.hello()).when().post("/ws/hw/hello").then();
     then.statusCode(200);
     then.contentType(ContentType.XML);
     // Hint: use exactly those prefixes as provided with function withNamespaceContext()
@@ -115,10 +113,9 @@ class RestAssuredHelloWorldTest {
   }
 
   @Test
-  @Disabled
   void sayHi() {
     ValidatableResponse then;
-    then = given().log().all(true).body(Xml.SOAPREQUESTS.sayHi("foo")).when().post("/soap/hw/user")
+    then = given().log().all(true).body(Xml.SOAPREQUESTS.sayHi("foo")).when().post("/ws/hw/user")
         .then();
     then.statusCode(200);
     then.contentType(ContentType.XML);

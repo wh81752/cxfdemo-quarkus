@@ -16,27 +16,27 @@ import io.app.domain.User;
  */
 
 //@WebService(/* endpointInterface = "io.app.soap.HelloWorld" */)
-public class GreetingImpl implements HelloWorld {
+public class GreetingImpl /* implements HelloWorld */ {
   static final Logger logger = Logger.getLogger(GreetingImpl.class);
 
   @Inject
   HelloWorldBackend hwService;
 
-  @Override
+  //@Override
   public String hello() {
     return hwService.hello();
   }
-  @Override
+  //@Override
   public String greet() {
     return hwService.hello();
   }
 
-  @Override
+  //@Override
   public String sayHi(String text) {
     return hwService.sayHi(text);
   }
 
-  @Override
+  //@Override
   public void addUser(User user) {
     try {
       logger.info("sayHiToUser:" + user);
@@ -47,7 +47,7 @@ public class GreetingImpl implements HelloWorld {
     }
   }
 
-  @Override
+  //@Override
   public Map<Integer, User> getUsers() {
     return hwService.getUsers();
   }

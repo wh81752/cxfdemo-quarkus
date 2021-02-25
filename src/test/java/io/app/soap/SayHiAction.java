@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author geronimo1
  */
-@XmlRootElement(name = "sayHi", namespace = "http://soap.app.io/")
+@XmlRootElement(name = "sayHi", namespace = "http://ws.app.io/")
 public class SayHiAction {
   @XmlElement(name = "arg0", required = true, nillable = false)
   public String payload;

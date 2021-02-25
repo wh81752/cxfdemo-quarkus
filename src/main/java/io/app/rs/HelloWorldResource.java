@@ -44,8 +44,14 @@ public class HelloWorldResource {
     }
 
     @POST
-    @Path("/add/{user}")
+    @Path("/s/add/{user}")
     @RolesAllowed({ "APPUSER" })
+    public void addUserSecure(@PathParam("user") UserImpl user) { // TODO: use interface User instead
+        hwService.addUser(user);
+    }
+
+    @POST
+    @Path("/add/{user}")
     public void addUser(@PathParam("user") UserImpl user) { // TODO: use interface User instead
         hwService.addUser(user);
     }
@@ -54,6 +60,15 @@ public class HelloWorldResource {
     @Path("/users")
     @PermitAll
     public Map<Integer, User> getUsers() {
+        return hwService.getUsers();
+    }
+
+    @GET
+    @Path("/users")
+    @PermitAll
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    public Map<Integer, User> getUsersXML() {
         return hwService.getUsers();
     }
 }

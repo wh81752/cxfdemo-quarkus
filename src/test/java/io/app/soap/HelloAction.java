@@ -10,6 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author geronimo1
  */
-@XmlRootElement(name = "hello", namespace = "http://soap.app.io/")
+@XmlRootElement(name = "hello", namespace = "http://ws.app.io/")
 public class HelloAction {
 }
