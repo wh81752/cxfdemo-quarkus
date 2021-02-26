@@ -78,7 +78,7 @@ public final class Xml {
         SOAP("http://schemas.xmlsoap.org/wsdl/soap/"),
         WSDL("http://schemas.xmlsoap.org/wsdl/"),
         XSD("http://www.w3.org/2001/XMLSchema"),
-        SENV("http://schemas.xmlsoap.org/soap/envelope/"),
+        ENV("http://schemas.xmlsoap.org/soap/envelope/"),
         HTTP("http://schemas.xmlsoap.org/soap/http");
 
         public final String namespace;
