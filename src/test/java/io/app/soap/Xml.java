@@ -40,7 +40,7 @@ public final class Xml {
         m.put("soap", "http://schemas.xmlsoap.org/wsdl/ws/");
         m.put("wsdl", "http://schemas.xmlsoap.org/wsdl/");
         m.put("xsd", "http://www.w3.org/2001/XMLSchema");
-        m.put("senv", "http://schemas.xmlsoap.org/ws/envelope/");
+        m.put("env", "http://schemas.xmlsoap.org/ws/envelope/");
         return Collections.unmodifiableMap(m);
     }
 

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.config.EncoderConfig.encoderConfig;
 import static org.xmlunit.matchers.HasXPathMatcher.hasXPath;
 
@@ -29,8 +28,8 @@ import static org.xmlunit.matchers.HasXPathMatcher.hasXPath;
  */
 
 @QuarkusTest
-class RestAssuredHelloWorldTest {
-    private static final Logger logger = Logger.getLogger(RestAssuredHelloWorldTest.class);
+class RestAssuredGreetingTest {
+    private static final Logger logger = Logger.getLogger(RestAssuredGreetingTest.class);
     // Turn trace logs for debugging
     private static boolean TRACE = false;
 
@@ -68,7 +67,7 @@ class RestAssuredHelloWorldTest {
     @Test
     void wsdl() {
         ValidatableResponse then;
-        then = when().get("/ws/hw?wsdl").then();
+        then = when().get("/ws/greet?wsdl").then();
         then.statusCode(200);
         then.contentType(ContentType.XML);
         // TODO: check against namespaced root element
@@ -79,7 +78,7 @@ class RestAssuredHelloWorldTest {
     @Test
     void hello_get() {
         ValidatableResponse then;
-        then = when().get("/ws/hw/hello").then();
+        then = when().get("/ws/greet/hello").then();
         then.statusCode(500);
         then.contentType(ContentType.XML);
     }
@@ -87,7 +86,7 @@ class RestAssuredHelloWorldTest {
     @Test
     void hello_post_empty() {
         ValidatableResponse then;
-        then = when().post("/ws/hw/hello").then();
+        then = when().post("/ws/greet/hello").then();
         then.statusCode(500);
         then.contentType(ContentType.XML);
     }
@@ -104,7 +103,7 @@ class RestAssuredHelloWorldTest {
         // xmlns:ns1="http://ws.app.io/"><return>Hello
         // World</return></ns1:helloResponse></soap:Body></soap:Envelope>
         ValidatableResponse then;
-        then = given(helloSoapRequest()).when().post("/ws/hw/hello").then();
+        then = given(helloSoapRequest()).when().post("/ws/greet/hello").then();
         then.statusCode(200);
         then.contentType(ContentType.XML);
         // Hint: use exactly those prefixes as provided with function withNamespaceContext()
@@ -115,7 +114,7 @@ class RestAssuredHelloWorldTest {
     @Test
     void hello_post_soap_variant_A() {
         ValidatableResponse then;
-        then = given(Xml.SOAPREQUESTS.hello()).when().post("/ws/hw/hello").then();
+        then = given(Xml.SOAPREQUESTS.hello()).when().post("/ws/greet/hello").then();
         then.statusCode(200);
         then.contentType(ContentType.XML);
         // Hint: use exactly those prefixes as provided with function withNamespaceContext()
@@ -126,7 +125,7 @@ class RestAssuredHelloWorldTest {
     @Test
     void sayHi() {
         ValidatableResponse then;
-        then = given(Xml.SOAPREQUESTS.sayHi("foo")).when().post("/ws/hw/user").then();
+        then = given(Xml.SOAPREQUESTS.sayHi("foo")).when().post("/ws/greet/user").then();
         then.statusCode(200);
         then.contentType(ContentType.XML);
         // Hint: use exactly those prefixes as provided with function withNamespaceContext()

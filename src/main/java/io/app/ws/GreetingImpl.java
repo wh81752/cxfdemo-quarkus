@@ -53,6 +53,10 @@ public class GreetingImpl implements HelloWorld {
     /**
      * Deviation from HelloWorldImpl: use a different @WebParam name, here
      * text instead of arg0.
+     *
+     * However: CXF states that @WebParam is placed on SEI. Applying on impl should
+     * either be a failure or should have no impact. The later is the case of CXF
+     * 3.4.2 (respective: quarkus-cxf-0.6.0).
      */
     @Override
     public String sayHi(@WebParam(name = "text") String text) {

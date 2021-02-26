@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xmlunit.matchers.HasXPathMatcher.hasXPath;
 
 /**
- * Class Documentation
+ * E2E tests for HelloWorldService mounted at {..}/hw1.
  *
  * <p>
  * Test SOAP EP
@@ -33,8 +33,11 @@ import static org.xmlunit.matchers.HasXPathMatcher.hasXPath;
  */
 
 @QuarkusTest
-class CXFHelloWorldTest {
-    private static final Logger logger = Logger.getLogger(CXFHelloWorldTest.class);
+class CXFHw1Test {
+    private static final Logger logger = Logger.getLogger(CXFHw1Test.class);
+
+    // Turn trace logs for debugging
+    private static boolean TRACE = false;
 
     @BeforeAll
     static void setup() {}
@@ -58,7 +61,7 @@ class CXFHelloWorldTest {
     }
 
     static private String baseurl() {
-        return String.format("http://localhost:%s/ws/hw",quarkusport());
+        return String.format("http://localhost:%s/ws/hw1", quarkusport());
     }
 
     static private URL wsURL() {
@@ -79,14 +82,18 @@ class CXFHelloWorldTest {
 
     static private HelloWorld client() {
         Service service = Service.create(serviceName());
-        service.addPort(portName(), SOAP.namespace, wsURL().toString());
+        service.addPort(
+                portName(),
+                SOAP.namespace,
+                wsURL().toString()
+        );
         return service.getPort(portName(), HelloWorld.class);
     }
 
     @Test
     void wsdl() {
         ValidatableResponse then;
-        then = given().log().all(true).when().get("/ws/hw?wsdl").then();
+        then = given().log().all(TRACE).when().get("/ws/hw1?wsdl").then();
         then.statusCode(200);
         then.contentType(ContentType.XML);
         then.body(hasXPath("/wsdl:definitions").withNamespaceContext(Xml.soapNamespaceContext()));
